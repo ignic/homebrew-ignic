@@ -1,12 +1,18 @@
 cask "dnie" do
-  version "1.5.3"
-  sha256 "2322553fcbec6674e7d56a5d758547e1ede334eb0f4e5703f4794f2d5815cc3a"
+  version "1.6.7"
 
-  url "https://www.dnielectronico.es/descargas/software_MACOS/libpkcs11-dnie-#{version}.dmg"
+  if Hardware::CPU.intel?
+    sha256 "9958018827196f7de45f0cbc88b1eb18edf5aace75827083df9a12bd61754fe6"
+    url "https://www.dnielectronico.es/descargas/software_MACOS/libpkcs11-dnie-#{version}_x64.pkg"
+    pkg "libpkcs11-dnie-#{version}_x64.pkg", allow_untrusted: true
+  else
+    sha256 "c5c06f63bb9295692585cd34a93825aa1b027a278f04dc01b690f9cfc6298bc6"
+    url "https://www.dnielectronico.es/descargas/software_MACOS/libpkcs11-dnie-#{version}_arm64.pkg"
+    pkg "libpkcs11-dnie-#{version}_arm64.pkg", allow_untrusted: true
+  end
+
   name "Driver PKCS#11 del DNIe"
   homepage "https://www.dnielectronico.es/"
-
-  pkg "libpkcs11-dnie-#{version}.pkg", allow_untrusted: true
 
   uninstall pkgutil: [
     "libpkcs11-dnie",
